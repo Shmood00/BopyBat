@@ -24,12 +24,18 @@
         <li class="nav-item">
           <a class="nav-link" href="{% url 'pastebin-index' %}">Home</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'pastebin-login' %}">Login</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Register</a>
-        </li>
+        {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'pastebin-logout' %}">Logout</a>
+          </li>
+        {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'pastebin-login' %}">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'pastebin-register' %}">Register</a>
+          </li>
+        {% endif %}
       </ul>
       
     </div>
@@ -37,10 +43,10 @@
 
 
   <body>
-    <div class="pt-2">
+    <div class="pt-2" style="margin-left:59px;">
       {% if messages %}
         {% for message in messages %}
-          <div class="alert alert-{{message.tags}}">
+          <div class="alert alert-{{message.tags}}" style="width: 350px;">
             {{ message }}
           </div>
         {% endfor %}

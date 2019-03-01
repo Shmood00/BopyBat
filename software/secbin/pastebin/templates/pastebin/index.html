@@ -1,6 +1,6 @@
 
 {% extends "pastebin/base.html" %}  
-
+{% load crispy_forms_tags %}
 {% block content %}
   
   <div class="container">
@@ -26,22 +26,7 @@
       </div>
       <!--beginning of second column in row1-->
       <div class="col-sm pt-3">
-        <div class="pt-2">
-          <div class="card">
-            <div class="card-body">
-              <h5><b>Login</b></h5><hr />
-              <form>
-                <div class="form-group">
-                  <input class="form-control" type="text" id="username" placeholder="Enter Username">
-                </div>
-                <div class="form-group">
-                  <input class="form-control" type="password" id="password" placeholder="Enter Password">
-                </div>
-                <button class="btn btn-primary" id="submitCredentials">Submit</button>
-              </form>
-            </div>
-          </div>
-        </div>
+        
         <!--new card for search -->
         <div class="pt-2 sticky-top">
           <div class="card">
