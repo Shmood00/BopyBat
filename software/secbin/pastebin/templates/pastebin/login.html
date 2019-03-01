@@ -1,0 +1,33 @@
+
+{% extends "pastebin/base.html" %}  
+
+{% block content %}
+  
+  <div class="container">
+    <div class="row">
+      <div class="col-sm pt-4">
+        <!--Beginning of Card-->
+        <div class="card" style="width:500px; margin: 0 auto;">
+          <div class="card-body">
+            <!--Beginning of user form -->
+            <h5><b>Login</b></h5><hr />
+            <form>
+              <div class="form-group">
+                <input class="form-control" id="username" type="text" placeholder="Enter username">
+              </div> 
+              <div class="form-group">
+                <input class="form-control" id="password" type="password" placeholder="Enter password">
+              </div>  
+              <button class="btn btn-primary" type="submit" id="userSubmit">Submit</button>
+            </form>
+            <!-- end of user form -->
+          </div>
+        </div>
+      </div>
+      <!--beginning of second column in row1-->
+      
+    </div>
+  </div>
+
+{% endblock content %}
+

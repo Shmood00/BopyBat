@@ -1,0 +1,82 @@
+
+{% extends "pastebin/base.html" %}  
+
+{% block content %}
+  
+  <div class="container">
+    <div class="row">
+      <div class="col-sm pt-4">
+        <!--Beginning of Card-->
+        <div class="card">
+          <div class="card-body">
+            <!--Beginning of pastearea form -->
+            <h5><b>New Bopy</b></h5><hr />
+            <form>
+              <div class="form-group">
+                <input class="form-control" id="pasteDataName" type="text" placeholder="Enter name for new baste...">
+              </div> 
+              <div class="form-group">
+                <textarea class="form-control" id="pasteData" placeholder="Enter in code..."></textarea>
+              </div>  
+              <button class="btn btn-primary" type="submit" id="pasteDataSubmit">Submit</button>
+            </form>
+            <!-- end of pastearea form -->
+          </div>
+        </div>
+      </div>
+      <!--beginning of second column in row1-->
+      <div class="col-sm pt-3">
+        <div class="pt-2">
+          <div class="card">
+            <div class="card-body">
+              <h5><b>Login</b></h5><hr />
+              <form>
+                <div class="form-group">
+                  <input class="form-control" type="text" id="username" placeholder="Enter Username">
+                </div>
+                <div class="form-group">
+                  <input class="form-control" type="password" id="password" placeholder="Enter Password">
+                </div>
+                <button class="btn btn-primary" id="submitCredentials">Submit</button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <!--new card for search -->
+        <div class="pt-2 sticky-top">
+          <div class="card">
+            <div class="card-body">
+              <form>
+                <div class="form-group">
+                  <input class="form-control" id="search" type="text" placeholder="Search">
+                </div>
+                <button class="btn btn-primary" id="searchSubmit">Search</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- beginning of third column in row1 (currently none) -->
+    </div>
+    <!--beginning of row2 -->
+    <div class="row">
+      <div class="col-sm pt-2">
+        <h5><b>Recent Bopies</b></h5><hr />
+        {% for post in posts %}
+          <div class="pt-3">
+            <div class="card">
+              <div class="card-body"> 
+                  <p><b>{{post.title}}</b> - {{post.date_posted|date:"F d, Y"}}</p><hr />
+                  <p>{{post.content}}</p>
+                  <p> - {{post.author}}</p>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      <!-- beginning of new column in row2-->
+    </div>
+  </div>
+
+{% endblock content %}
+
