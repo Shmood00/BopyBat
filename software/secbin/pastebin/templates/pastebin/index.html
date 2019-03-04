@@ -5,25 +5,7 @@
   
   <div class="container">
     <div class="row">
-      <div class="col-sm pt-4">
-        <!--Beginning of Card-->
-        <div class="card">
-          <div class="card-body">
-            <!--Beginning of pastearea form -->
-            <h5><b>New Bopy</b></h5><hr />
-            <form>
-              <div class="form-group">
-                <input class="form-control" id="pasteDataName" type="text" placeholder="Enter name for new baste...">
-              </div> 
-              <div class="form-group">
-                <textarea class="form-control" id="pasteData" placeholder="Enter in code..."></textarea>
-              </div>  
-              <button class="btn btn-primary" type="submit" id="pasteDataSubmit">Submit</button>
-            </form>
-            <!-- end of pastearea form -->
-          </div>
-        </div>
-      </div>
+      
       <!--beginning of second column in row1-->
       <div class="col-sm pt-3">
         
@@ -51,7 +33,7 @@
           <div class="pt-2">
             <div class="card">
               <div class="card-body"> 
-                  <p><b>{{post.title}}</b> - {{post.date_posted|date:"F d, Y"}}</p><hr />
+                  <p><b><a href="{% url 'bopie-detail' post.id %}">{{post.title}}</a></b> - {{post.date_posted|date:"F d, Y"}}</p><hr />
                   <p>{{post.content}}</p>
                   <p> - {{post.author}}</p>
               </div>

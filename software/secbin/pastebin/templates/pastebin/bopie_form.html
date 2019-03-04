@@ -1,0 +1,32 @@
+
+{% extends "pastebin/base.html" %}  
+{% load crispy_forms_tags %}
+{% block content %}
+  
+  <div class="container">
+    <div class="row">
+      <div class="col-sm pt-4">
+        <!--Beginning of Card-->
+        <div class="card" style="width:500px; margin: 0 auto;">
+          <div class="card-body">
+            <!--Beginning of user form -->
+            <h5><b>New Bopie</b></h5><hr />
+            <form method="POST">
+              {% csrf_token %}
+              <div class="form-group">
+                {{form|crispy}}
+              </div> 
+              
+              <button class="btn btn-primary" type="submit">Post</button>
+            </form>
+            <!-- end of user form -->
+          </div>
+        </div>
+      </div>
+      <!--beginning of second column in row1-->
+      
+    </div>
+  </div>
+
+{% endblock content %}
+

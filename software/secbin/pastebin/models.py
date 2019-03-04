@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 from PIL import Image
+from django.urls import reverse
 
 # Create your models here.
 class Bopie(models.Model):
@@ -12,6 +13,11 @@ class Bopie(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self): #after new post, redirects to detailed view of new post
+        return reverse('bopie-detail', kwargs={'pk': self.pk})
+
+
 
 #for user profile
 class Profile(models.Model):

@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Bopie
 from django.contrib import messages
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
@@ -13,6 +15,52 @@ def index(request):
     }
 
     return render(request, 'pastebin/index.html', context)
+
+class PostListView(ListView):
+    model = Bopie
+    template_name = 'pastebin/index.html'
+    context_object_name = 'posts'
+    ordering = ['-date_posted'] #views them from newest to oldest
+
+class PostDetailView(DetailView):
+    model = Bopie
+
+
+class PostCreateView(LoginRequiredMixin, CreateView):
+    model = Bopie
+    fields = ['title', 'content']
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Bopie
+    fields = ['title', 'content']
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+    
+    def test_func(self):
+        bopie = self.get_object()
+
+        if self.request.user == bopie.author:
+            return True
+        return False
+
+class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Bopie
+
+    success_url = '/'
+    def test_func(self):
+        bopie = self.get_object()
+
+        if self.request.user == bopie.author:
+            return True
+        return False
+    
+
 
 def about(request): #will actually login TBH IDK IF THIS IS NEEDED
     return render(request, 'pastebin/about.html', {'title':'About'})
