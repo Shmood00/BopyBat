@@ -6,5 +6,6 @@ urlpatterns = [
     path('', views.index, name='pastebin-index'),
     path('login/', auth_views.LoginView.as_view(template_name='pastebin/login.html'), name='pastebin-login'),
     path('logout/', auth_views.LogoutView.as_view(template_name='pastebin/logout.html'), name='pastebin-logout'),
-    path('register/', views.register, name='pastebin-register')
+    path('register/', views.register, name='pastebin-register'),
+    path('profile/', views.profile, name='pastebin-profile'),
 ]
