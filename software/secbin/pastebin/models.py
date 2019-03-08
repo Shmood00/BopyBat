@@ -6,16 +6,18 @@ from django.urls import reverse
 
 # Create your models here.
 class Bopie(models.Model):
+    bopie_id = models.AutoField(primary_key = True)
     title = models.CharField(max_length=100)
     content = models.TextField()
     date_posted = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User, on_delete=models.CASCADE) #creating foreign key relationship with user and bopies
+    slug = models.SlugField(max_length=250,default="hallo",unique=True) 
 
     def __str__(self):
         return self.title
 
     def get_absolute_url(self): #after new post, redirects to detailed view of new post
-        return reverse('bopie-detail', kwargs={'pk': self.pk})
+        return reverse('bopie-detail', kwargs={'slug': self.slug})
 
 
 

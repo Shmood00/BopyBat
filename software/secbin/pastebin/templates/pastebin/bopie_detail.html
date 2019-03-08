@@ -14,8 +14,8 @@
                   <p>{{object.content}}</p>
                   <p> - {{object.author}}</p>
                   {% if object.author == user %}
-                    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'bopie-update' object.id %}">Update</a>
-                    <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'bopie-delete' object.id %}">Delete</a>
+                    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'bopie-update' object.slug %}">Update</a>
+                    <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'bopie-delete' object.slug %}">Delete</a>
                   {% endif %}
               </div>
             </div>

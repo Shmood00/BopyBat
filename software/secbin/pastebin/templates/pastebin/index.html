@@ -33,7 +33,7 @@
           <div class="pt-2">
             <div class="card">
               <div class="card-body"> 
-                  <p><b><a href="{% url 'bopie-detail' post.id %}">{{post.title}}</a></b> - {{post.date_posted|date:"F d, Y"}}</p><hr />
+                  <p><b><a href="{% url 'bopie-detail' post.slug %}">{{post.title}}</a></b> - {{post.date_posted|date:"F d, Y"}}</p><hr />
                   <p>{{post.content}}</p>
                   <p> - {{post.author}}</p>
               </div>

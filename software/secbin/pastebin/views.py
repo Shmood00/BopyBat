@@ -5,8 +5,10 @@ from .models import Bopie
 from django.contrib import messages
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 from django.contrib.auth.decorators import login_required
-import short_url #was testing
-
+import short_url
+from django.shortcuts import get_object_or_404
+from .base_62_converter import *
+from random import randint
 # Create your views here.
 
 #home page
@@ -24,16 +26,22 @@ class PostListView(ListView):
     ordering = ['-date_posted'] #views them from newest to oldest
     paginate_by = 10
 
-class PostDetailView(DetailView):
-    model = Bopie
+class PostDetailView(DetailView):    
+#    model = get_object_or_404(Bopie)
+ #   model = Bopie.objects.all()
+     model = Bopie
+    
 
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Bopie
     fields = ['title', 'content']
-
+    
     def form_valid(self, form):
+        model = Bopie
         form.instance.author = self.request.user
+        form.instance.slug = dehydrate(randint(100000000,9999999999))
+        print(form.instance.slug)
         return super().form_valid(form)
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
