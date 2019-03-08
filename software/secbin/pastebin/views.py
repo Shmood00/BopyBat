@@ -5,6 +5,7 @@ from .models import Bopie
 from django.contrib import messages
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 from django.contrib.auth.decorators import login_required
+import short_url #was testing
 
 # Create your views here.
 
@@ -21,6 +22,7 @@ class PostListView(ListView):
     template_name = 'pastebin/index.html'
     context_object_name = 'posts'
     ordering = ['-date_posted'] #views them from newest to oldest
+    paginate_by = 10
 
 class PostDetailView(DetailView):
     model = Bopie

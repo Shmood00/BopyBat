@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'pastebin.apps.PastebinConfig',
+    'short_url',
     'crispy_forms',
     'sslserver', #used for ssl certificate
     'django.contrib.admin',
@@ -131,3 +132,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 LOGIN_REDIRECT_URL = 'pastebin-index'
 LOGIN_URL = 'pastebin-login'
+
+#used for using MY gmail
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
