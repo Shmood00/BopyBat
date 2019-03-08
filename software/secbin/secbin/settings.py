@@ -133,6 +133,10 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_REDIRECT_URL = 'pastebin-index'
 LOGIN_URL = 'pastebin-login'
 
-#used for using MY gmail
+#used for sending reset email (run on local smtp server)
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 1025
+#EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')
