@@ -1,1 +1,0 @@
-<django.db.models.query_utils.DeferredAttribute object at 0x7f5c6d0ab6a0>
