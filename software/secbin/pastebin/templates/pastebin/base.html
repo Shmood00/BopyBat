@@ -24,9 +24,9 @@
                     
       $(document).ready(function() {
         $("#save-data").click(function() {
-          var textToWrite = `{{object.content}}`
+          var textToWrite = `{{object.content|safe}}`
           var blob = new Blob([textToWrite], {type:"text/plain;charset=utf-8"});
-          saveAs(blob, "{{object.title}} - {{object.author}}.txt");
+          saveAs(blob, "{{object.title|safe}} - {{object.author|safe}}.txt");
         });
       });
 

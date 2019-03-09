@@ -33,9 +33,14 @@
           <div class="pt-2">
             <div class="card">
               <div class="card-body"> 
-                  <p><b><a href="{% url 'bopie-detail' post.slug %}">{{post.title}}</a></b> - {{post.date_posted|date:"F d, Y"}}</p><hr />
-                  <p><code style="white-space: pre-wrap; color:black;">{{post.content}}</code></p>
-                  <p> - {{post.author}}</p>
+                
+                <div style="display: inline-flex;">
+                  <p><b><a href="{% url 'bopie-detail' post.slug %}">{{post.title}}</a></b> - {{post.date_posted|date:"F d, Y"}}</p>
+                  
+                </div><p style="float: right;"><b>{{post.author}}</b></p><hr />
+                
+                <p><code style="white-space: pre-wrap; color:black;">{{post.content}}</code></p>
+                
               </div>
             </div>
           </div>
