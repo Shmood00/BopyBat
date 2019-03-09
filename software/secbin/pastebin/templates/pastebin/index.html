@@ -4,7 +4,7 @@
 {% block content %}
   
   <div class="container">
-    <div class="row">
+    <div class="row" style="width:80%; margin: 0 auto;">
       
       <!--beginning of second column in row1-->
       <div class="col-sm pt-3">
@@ -26,7 +26,7 @@
       <!-- beginning of third column in row1 (currently none) -->
     </div>
     <!--beginning of row2 -->
-    <div class="row">
+    <div class="row" style="width: 80%; margin: 0 auto;">
       <div class="col-sm pt-4">
         <h5><b>Recent Bopies</b></h5><hr />
         {% for post in posts %}
@@ -34,7 +34,7 @@
             <div class="card">
               <div class="card-body"> 
                   <p><b><a href="{% url 'bopie-detail' post.slug %}">{{post.title}}</a></b> - {{post.date_posted|date:"F d, Y"}}</p><hr />
-                  <p>{{post.content}}</p>
+                  <p><code style="white-space: pre-wrap; color:black;">{{post.content}}</code></p>
                   <p> - {{post.author}}</p>
               </div>
             </div>

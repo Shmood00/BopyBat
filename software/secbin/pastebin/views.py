@@ -9,6 +9,7 @@ import short_url
 from django.shortcuts import get_object_or_404
 from .base_62_converter import *
 from random import randint
+import requests
 # Create your views here.
 
 #home page
@@ -31,8 +32,6 @@ class PostDetailView(DetailView):
  #   model = Bopie.objects.all()
      model = Bopie
     
-
-
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Bopie
     fields = ['title', 'content']
@@ -71,10 +70,6 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return False
     
 
-
-def about(request): #will actually login TBH IDK IF THIS IS NEEDED
-    return render(request, 'pastebin/about.html', {'title':'About'})
-
 #registration
 def register(request):
     
@@ -91,6 +86,9 @@ def register(request):
         form = UserRegisterForm()
 
     return render(request, 'pastebin/register.html', {'form':form, 'title':'Register'})
+
+
+
 
 @login_required #user must be logged in to access this page
 def profile(request):
