@@ -10,6 +10,7 @@ from django.shortcuts import get_object_or_404
 from .base_62_converter import *
 from random import randint
 import requests
+from django.core.files.base import File
 # Create your views here.
 
 #home page
@@ -34,21 +35,25 @@ class PostDetailView(DetailView):
     
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Bopie
-    fields = ['title', 'content']
-    
+    fields = ['title', 'postUpload','content']
+
     def form_valid(self, form):
         model = Bopie
+    
         form.instance.author = self.request.user
         form.instance.slug = dehydrate(randint(100000000,9999999999))
+        
         print(form.instance.slug)
+
         return super().form_valid(form)
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Bopie
-    fields = ['title', 'content']
+    fields = ['title', 'postUpload','content']
 
     def form_valid(self, form):
         form.instance.author = self.request.user
+    
         return super().form_valid(form)
     
     def test_func(self):

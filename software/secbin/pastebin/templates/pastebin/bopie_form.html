@@ -11,7 +11,7 @@
           <div class="card-body">
             <!--Beginning of user form -->
             <h5><b>Bopie</b></h5><hr />
-            <form method="POST">
+            <form method="POST" enctype="multipart/form-data">
               {% csrf_token %}
               <div class="form-group">
                 {{form|crispy}}

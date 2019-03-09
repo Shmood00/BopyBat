@@ -10,7 +10,7 @@
       <div class="col-sm pt-3">
         
         <!--new card for search -->
-        <div class="pt-2 sticky-top">
+        <div class="pt-2">
           <div class="card">
             <div class="card-body">
               <form>
@@ -39,8 +39,12 @@
                   
                 </div><p style="float: right;"><b>{{post.author}}</b></p><hr />
                 
-                <p><code style="white-space: pre-wrap; color:black;">{{post.content}}</code></p>
+                {% if post.postUpload %}
+                  <p><code style="white-space: pre-wrap; color:black;">{{post.postUpload.read.decode}}</code></p>
                 
+                {% else %}
+                  <p><code style="white-space: pre-wrap; color:black;">{{post.content}}</code></p>
+                {% endif %}
               </div>
             </div>
           </div>

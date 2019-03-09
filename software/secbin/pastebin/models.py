@@ -12,6 +12,9 @@ class Bopie(models.Model):
     date_posted = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User, on_delete=models.CASCADE) #creating foreign key relationship with user and bopies
     slug = models.SlugField(max_length=250,default="hallo",unique=True) 
+    
+    #for uploading posts w/ txt file
+    postUpload = models.FileField(null=True, blank=True, upload_to='post_content')
 
     def __str__(self):
         return self.title
