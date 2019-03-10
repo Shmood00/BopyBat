@@ -16,6 +16,7 @@ class Bopie(models.Model):
     #for uploading posts w/ txt file
     postUpload = models.FileField(null=True, blank=True, upload_to='post_content')
 
+
     def __str__(self):
         return self.title
 

@@ -9,6 +9,7 @@ urlpatterns = [
     path('post/new/', PostCreateView.as_view(), name='bopie-create'),
     path('post/<str:slug>/', PostDetailView.as_view(), name='bopie-detail'),
     path('post/<str:slug>/update/', PostUpdateView.as_view(), name='bopie-update'),
+    path('results/', views.search, name='search'),
     path('post/<str:slug>/delete/', PostDeleteView.as_view(), name='bopie-delete'),
     path('login/', auth_views.LoginView.as_view(template_name='pastebin/login.html'), name='pastebin-login'),
     path('logout/', auth_views.LogoutView.as_view(template_name='pastebin/logout.html'), name='pastebin-logout'),

@@ -10,7 +10,8 @@ from django.shortcuts import get_object_or_404
 from .base_62_converter import *
 from random import randint
 import requests
-from django.core.files.base import File
+from django.core.paginator import Paginator
+from django.db.models import Q
 # Create your views here.
 
 #home page
@@ -27,6 +28,7 @@ class PostListView(ListView):
     context_object_name = 'posts'
     ordering = ['-date_posted'] #views them from newest to oldest
     paginate_by = 10
+
 
 class PostDetailView(DetailView):    
 #    model = get_object_or_404(Bopie)
@@ -73,7 +75,22 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         if self.request.user == bopie.author:
             return True
         return False
-    
+
+def search(request): #searching
+    template = "pastebin/index.html"
+    query = request.GET.get('q')
+
+    if query:
+        results = Bopie.objects.filter(Q(title__icontains=query) | Q(content__icontains=query) | Q(author__username__icontains=query))
+    else:
+        results = Bopie.objects.all().order_by('-date_posted')
+
+    context = {
+        'posts':results
+    }
+
+    return render(request, template, context)
+
 
 #registration
 def register(request):

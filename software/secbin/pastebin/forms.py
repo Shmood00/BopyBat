@@ -23,3 +23,4 @@ class ProfileUpdateForm(forms.ModelForm):
         fields = ['profilePic']
 
 
+

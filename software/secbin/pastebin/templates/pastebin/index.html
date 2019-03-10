@@ -13,9 +13,9 @@
         <div class="pt-2">
           <div class="card">
             <div class="card-body">
-              <form>
+              <form method="GET" action="{% url 'search' %}">
                 <div class="form-group">
-                  <input class="form-control" id="search" type="text" placeholder="Search">
+                  <input class="form-control" name="q" value="{{request.GET.q}}" type="text" placeholder="Search">
                 </div>
                 <button class="btn btn-primary" id="searchSubmit">Search</button>
               </form>
