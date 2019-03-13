@@ -11,6 +11,7 @@ urlpatterns = [
     path('post/<str:slug>/update/', PostUpdateView.as_view(), name='bopie-update'),
     path('results/', views.search, name='search'),
     path('post/<str:slug>/delete/', PostDeleteView.as_view(), name='bopie-delete'),
+    #path('download/', ),
     path('login/', auth_views.LoginView.as_view(template_name='pastebin/login.html'), name='pastebin-login'),
     path('logout/', auth_views.LogoutView.as_view(template_name='pastebin/logout.html'), name='pastebin-logout'),
     path('password-reset/', auth_views.PasswordResetView.as_view(template_name='pastebin/password_reset.html'), name='password_reset'),

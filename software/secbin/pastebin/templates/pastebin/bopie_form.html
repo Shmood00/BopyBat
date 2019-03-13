@@ -11,6 +11,8 @@
           <div class="card-body">
             <!--Beginning of user form -->
             <h5><b>Bopie</b></h5><hr />
+
+            {% if not user.is_superuser %}
             <form method="POST" enctype="multipart/form-data">
               {% csrf_token %}
               <div class="form-group">
@@ -22,6 +24,13 @@
                 
               </div>
             </form>
+            {% else %}
+              <div class="container">
+                <h4>Administrators are not allowed to create posts.</h4>
+              </div>
+
+            {% endif %}
+            
             <!-- end of user form -->
           </div>
         </div>

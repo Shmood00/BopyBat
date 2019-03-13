@@ -15,7 +15,9 @@ class Bopie(models.Model):
     
     #for uploading posts w/ txt file
     postUpload = models.FileField(null=True, blank=True, upload_to='post_content')
-
+    
+    #admin disabling posts
+    is_disabled = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title

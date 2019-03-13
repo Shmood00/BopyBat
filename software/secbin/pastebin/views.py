@@ -12,6 +12,8 @@ from random import randint
 import requests
 from django.core.paginator import Paginator
 from django.db.models import Q
+from django.core.files.base import ContentFile
+from django.core.files.storage import default_storage
 # Create your views here.
 
 #home page
@@ -29,6 +31,9 @@ class PostListView(ListView):
     ordering = ['-date_posted'] #views them from newest to oldest
     paginate_by = 10
 
+    def get_queryset(self):
+        return Bopie.objects.filter(is_disabled=False).order_by('-date_posted')
+
 
 class PostDetailView(DetailView):    
 #    model = get_object_or_404(Bopie)
@@ -38,6 +43,7 @@ class PostDetailView(DetailView):
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Bopie
     fields = ['title', 'postUpload','content']
+    
 
     def form_valid(self, form):
         model = Bopie
@@ -48,6 +54,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         print(form.instance.slug)
 
         return super().form_valid(form)
+
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Bopie
@@ -81,15 +88,16 @@ def search(request): #searching
     query = request.GET.get('q')
 
     if query:
-        results = Bopie.objects.filter(Q(title__icontains=query) | Q(content__icontains=query) | Q(author__username__icontains=query))
-    else:
-        results = Bopie.objects.all().order_by('-date_posted')
-
-    context = {
+        results = Bopie.objects.filter(Q(title__icontains=query) | Q(content__icontains=query) | Q(author__username__iexact=query))
+        
+        context = {
         'posts':results
-    }
-
-    return render(request, template, context)
+        }
+        
+        
+        return render(request, template, context)
+    else:
+        return redirect('/')
 
 
 #registration
@@ -136,3 +144,23 @@ def profile(request):
     }
 
     return render(request, 'pastebin/profile.html', context)
+
+
+def getContent(request):
+    items = Bopie.objects.all()
+
+    response = HttpResponse(content_type="text/csv")
+
+
+    response['Content-Disposition'] = 'attachment; filename="content.csv"'
+
+    writer = csv.writer(response, delimiter=',')
+
+    writer.writerow(['stuff'])
+
+    for obj in items:
+        writer.writerow([obj.stuff])
+
+    return response
+
+
