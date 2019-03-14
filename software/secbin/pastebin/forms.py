@@ -22,5 +22,14 @@ class ProfileUpdateForm(forms.ModelForm):
         model = Profile
         fields = ['profilePic']
 
+class DateField(forms.Form):
+
+    class Meta:
+        model = Bopie
+        fields = ['date_expiry']
+
+
+
+
 
 

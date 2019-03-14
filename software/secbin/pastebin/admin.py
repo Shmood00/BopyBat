@@ -3,5 +3,11 @@ from .models import Bopie
 from .models import Profile
 
 # Register your models here.
-admin.site.register(Bopie)
-admin.site.register(Profile)
+
+class AppAdmin(admin.ModelAdmin):
+    def has_add_permission(self, request):
+        return False
+
+
+admin.site.register(Bopie, AppAdmin)
+admin.site.register(Profile, AppAdmin)

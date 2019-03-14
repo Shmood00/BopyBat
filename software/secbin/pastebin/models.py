@@ -1,8 +1,12 @@
 from django.db import models
+from django.contrib import admin
 from django.utils import timezone
 from django.contrib.auth.models import User
 from PIL import Image
 from django.urls import reverse
+from cryptography.fernet import Fernet
+from secbin.settings import db_key
+from django import forms
 
 # Create your models here.
 class Bopie(models.Model):
@@ -17,11 +21,13 @@ class Bopie(models.Model):
     postUpload = models.FileField(null=True, blank=True, upload_to='post_content')
     
     #admin disabling posts
-    is_disabled = models.BooleanField(default=False)
+    disable_bopie = models.BooleanField(default=False)
+
+    date_expiry = models.DateField(verbose_name='Expiry Date', blank=True, default=timezone.now)
 
     def __str__(self):
-        return self.title
-
+        return self.title  
+    
     def get_absolute_url(self): #after new post, redirects to detailed view of new post
         return reverse('bopie-detail', kwargs={'slug': self.slug})
 

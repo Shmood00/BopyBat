@@ -3,7 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Bopie
 from django.contrib import messages
-from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
+from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, DateField
 from django.contrib.auth.decorators import login_required
 import short_url
 from django.shortcuts import get_object_or_404
@@ -12,8 +12,9 @@ from random import randint
 import requests
 from django.core.paginator import Paginator
 from django.db.models import Q
-from django.core.files.base import ContentFile
-from django.core.files.storage import default_storage
+from cryptography.fernet import Fernet
+from secbin.settings import db_key
+import datetime
 # Create your views here.
 
 #home page
@@ -27,12 +28,13 @@ def index(request):
 class PostListView(ListView):
     model = Bopie
     template_name = 'pastebin/index.html'
+        
     context_object_name = 'posts'
     ordering = ['-date_posted'] #views them from newest to oldest
     paginate_by = 10
 
     def get_queryset(self):
-        return Bopie.objects.filter(is_disabled=False).order_by('-date_posted')
+        return Bopie.objects.filter(disable_bopie=False).filter(date_expiry__gte=datetime.date.today()).order_by('-date_posted')
 
 
 class PostDetailView(DetailView):    
@@ -42,17 +44,15 @@ class PostDetailView(DetailView):
     
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Bopie
-    fields = ['title', 'postUpload','content']
     
-
+    fields = ['title', 'postUpload','content', 'date_expiry']
+    
     def form_valid(self, form):
         model = Bopie
-    
+        
         form.instance.author = self.request.user
         form.instance.slug = dehydrate(randint(100000000,9999999999))
         
-        print(form.instance.slug)
-
         return super().form_valid(form)
 
 
@@ -82,6 +82,7 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         if self.request.user == bopie.author:
             return True
         return False
+
 
 def search(request): #searching
     template = "pastebin/index.html"
@@ -144,23 +145,5 @@ def profile(request):
     }
 
     return render(request, 'pastebin/profile.html', context)
-
-
-def getContent(request):
-    items = Bopie.objects.all()
-
-    response = HttpResponse(content_type="text/csv")
-
-
-    response['Content-Disposition'] = 'attachment; filename="content.csv"'
-
-    writer = csv.writer(response, delimiter=',')
-
-    writer.writerow(['stuff'])
-
-    for obj in items:
-        writer.writerow([obj.stuff])
-
-    return response
 
 
