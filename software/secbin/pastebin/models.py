@@ -7,6 +7,22 @@ from django.urls import reverse
 from cryptography.fernet import Fernet
 from secbin.settings import db_key
 from django import forms
+from datetime import datetime, timedelta
+import os
+from uuid import uuid4
+from .validators import validate_file_size_type
+
+#Changes post upload filename 
+def unique_file_name(instance, filename):
+    upload_to = 'post_content'
+    ext = filename.split('.')[-1]
+
+    if instance.title:
+        filename = '{}.{}'.format(instance.title, ext)
+    else:
+        filename = '{}.{}'.format(uuid4().hex, ext)
+    
+    return os.path.join(upload_to, filename)
 
 # Create your models here.
 class Bopie(models.Model):
@@ -18,25 +34,38 @@ class Bopie(models.Model):
     slug = models.SlugField(max_length=250,default="hallo",unique=True) 
     
     #for uploading posts w/ txt file
-    postUpload = models.FileField(null=True, blank=True, upload_to='post_content')
+    postUpload = models.FileField(verbose_name="Upload Post",null=True, blank=True, upload_to=unique_file_name, validators=[validate_file_size_type])
     
     #admin disabling posts
     disable_bopie = models.BooleanField(default=False)
 
-    date_expiry = models.DateField(verbose_name='Expiry Date', blank=True, default=timezone.now)
+    date_expiry = models.DateField(verbose_name='Expiry Date', blank=True, default=datetime.now()+timedelta(2), null=True)
 
+    
+   
+    def save(self, *args, **kwargs):
+        super(Bopie, self).save(*args, **kwargs)
+    
     def __str__(self):
         return self.title  
     
     def get_absolute_url(self): #after new post, redirects to detailed view of new post
         return reverse('bopie-detail', kwargs={'slug': self.slug})
 
-
-
 #for user profile
+
+#Renames profile pic upload to random filename
+def pic_file_path(instance, filename):
+    upload_to = 'profile_pics'
+    ext = filename.split('.')[-1]
+
+    filename = '{}.{}'.format(uuid4().hex, ext)
+    
+    return os.path.join(upload_to, filename)
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    profilePic = models.ImageField(default='default.png', upload_to='profile_pics')
+    profilePic = models.ImageField(verbose_name="Profile Picture", default='default.png', upload_to=pic_file_path, validators=[validate_file_size_type])
 
     def __str__(self):
         return '{} Profile'.format(self.user.username)

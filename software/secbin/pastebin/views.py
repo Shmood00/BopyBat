@@ -3,18 +3,17 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Bopie
 from django.contrib import messages
-from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, DateField
+from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, DateField, postUpload
 from django.contrib.auth.decorators import login_required
-import short_url
 from django.shortcuts import get_object_or_404
 from .base_62_converter import *
 from random import randint
-import requests
+import requests, os
 from django.core.paginator import Paginator
 from django.db.models import Q
-from cryptography.fernet import Fernet
 from secbin.settings import db_key
-import datetime
+from datetime import datetime, timedelta
+from django.core.files.storage import FileSystemStorage
 # Create your views here.
 
 #home page
@@ -30,19 +29,27 @@ class PostListView(ListView):
     template_name = 'pastebin/index.html'
         
     context_object_name = 'posts'
-    ordering = ['-date_posted'] #views them from newest to oldest
+    #ordering = ['-date_posted'] #views them from newest to oldest
     paginate_by = 10
 
+
     def get_queryset(self):
-        return Bopie.objects.filter(disable_bopie=False).filter(date_expiry__gte=datetime.date.today()).order_by('-date_posted')
 
 
-class PostDetailView(DetailView):    
-#    model = get_object_or_404(Bopie)
- #   model = Bopie.objects.all()
+        return Bopie.objects.filter(
+            Q(
+                Q(date_expiry__gt=datetime.now()) & Q(disable_bopie=False)
+            ) |
+            Q(
+                Q(date_expiry=None) & Q(disable_bopie=False)
+            )
+            ).order_by('-date_posted')
+
+
+class PostDetailView(DetailView):
      model = Bopie
     
-class PostCreateView(LoginRequiredMixin, CreateView):
+class PostCreateView(LoginRequiredMixin, CreateView): #Displays the form for user to create a new Bopie (post)
     model = Bopie
     
     fields = ['title', 'postUpload','content', 'date_expiry']
@@ -55,10 +62,10 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         
         return super().form_valid(form)
 
-
+# Display form to update existing Bopie (post)
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Bopie
-    fields = ['title', 'postUpload','content']
+    fields = ['title', 'postUpload','content', 'date_expiry']
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -84,12 +91,45 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return False
 
 
-def search(request): #searching
+#Function that handles searching
+def search(request):
     template = "pastebin/index.html"
     query = request.GET.get('q')
 
     if query:
-        results = Bopie.objects.filter(Q(title__icontains=query) | Q(content__icontains=query) | Q(author__username__iexact=query))
+        results = Bopie.objects.filter(
+            Q(
+                Q( 
+                    Q(content__icontains=query)|
+                    Q(title__icontains=query)|
+                    Q(author__username__iexact=query) |
+                    Q(date_expiry=None)
+                )
+
+                & 
+
+                Q(
+                    Q(date_expiry__gt=datetime.now()) &
+                    Q(disable_bopie=False)
+                )
+            ) |
+            Q(
+                Q(
+                    Q(content__icontains=query)|
+                    Q(title__icontains=query)|
+                    Q(author__username__iexact=query)
+                    
+                )
+                &
+                Q(
+                    
+                    Q(date_expiry=None) &
+                    Q(disable_bopie=False)
+                )
+                
+            )
+        ).order_by('-date_posted')
+        
         
         context = {
         'posts':results
@@ -101,7 +141,7 @@ def search(request): #searching
         return redirect('/')
 
 
-#registration
+#Function that handles user registration
 def register(request):
     
     if request.method == 'POST':
@@ -116,11 +156,11 @@ def register(request):
     else:
         form = UserRegisterForm()
 
-    return render(request, 'pastebin/register.html', {'form':form, 'title':'Register'})
+    return render(request, 'pastebin/register.html', {'form':form})
 
 
 
-
+#Function that handles user Profile
 @login_required #user must be logged in to access this page
 def profile(request):
 

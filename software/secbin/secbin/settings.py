@@ -138,6 +138,6 @@ LOGIN_URL = 'pastebin-login'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'localhost'
 EMAIL_PORT = 1025
-#EMAIL_USE_TLS = True
+#EMAIL_USE_TLS = True #TLS is unable to be used while running local SMTP server
 EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')

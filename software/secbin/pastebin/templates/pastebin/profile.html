@@ -18,7 +18,11 @@
                     {% csrf_token %}
                     <div class="form-group">
                         <h5 class="pt-4"><b>User Information</b></h5><hr />
-                        
+                        {% if profile_form.errors %}
+                            <div class="alert alert-danger">
+                                <p>{{profile_form.profilePic.errors}}</p>
+                            </div>
+                        {% endif %}
                         {{profile_form|crispy}}
                         {{user_form|crispy}}
                     </div> 

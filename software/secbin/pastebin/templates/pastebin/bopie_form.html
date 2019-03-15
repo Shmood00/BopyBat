@@ -15,6 +15,11 @@
             {% if not user.is_superuser %}
             <form method="POST" enctype="multipart/form-data">
               {% csrf_token %}
+              {% if form.errors %}
+                <div class="alert alert-danger">
+                  <p>{{form.postUpload.errors}}</p>
+                </div>
+              {% endif %}
               <div class="form-group">
                 {{form|crispy}}
               </div> 
