@@ -34,3 +34,8 @@ To run the Web App on your server, do the following:
 * Once in the proper directory, run the following to execute the server:```sudo python3 manage.py runsslserver```
 * To view the Web App open your preferred browser and direct yourself to: [https://localhost:8000/](https://localhost:8000)
 * NOTE: If you would like to test the "Forgot Password" functionality, please open up a new terminal on your machine and run the following command in order run a local SMTP server: ```python -m smtpd -n -c DebuggingServer localhost:1025```
+
+## How Disabling Posts Work
+In order to get administrator to be able to disable specific posts, we first had to add a new boolean field (```disable_bopie```) to the Bopie class located in [models.py](/software/secbin/pastebin/models.py). Because this field is only accessible to the administrators, we did not have to add this new field to our ```PostCreateView``` class in [views.py](/software/secbin/pastebin/views.py).
+
+Once the boolean field was added into [models.py](/software/secbin/pastebin/models.py), we had to make sure that disabled posts would not be displayed. In order to do this, we added the ```get_queryset()``` in [views.py](/software/secbin/pastebin/views.py) within our ```PostListView``` class. Within the ```get_queryset()``` function we added a query to grab posts that have the ```disable_bopie``` field set to ```False```. Because this function was in our ```PostListView``` class, it will only show users posts based on whatever the ```get_queryset()``` function returns.
