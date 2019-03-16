@@ -45,3 +45,13 @@ We also used a python base 62 converter that we got from [here](https://gist.git
 Most of the edits in our app were done on the [models.py](/software/secbin/pastebin/models.py), [views.py](/software/secbin/pastebin/views.py) and [urls.py](/software/secbin/pastebin/urls.py) files.
 
 We also editted a lot of the files located in the [templates/pastebin](/software/secbin/pastebin/templates/pastebin) 
+
+## SSL and Theme
+
+![](/software/secbin/media/secsofty.jpg)
+
+## Backups
+We decided to use cron to backup our web app
+
+![](/software/secbin/media/secsofty2.jpg)
+![](/software/secbin/media/secsofty3.jpg)
