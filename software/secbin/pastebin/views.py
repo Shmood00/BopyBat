@@ -5,7 +5,7 @@ from .models import Bopie
 from django.contrib import messages
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, DateField, postUpload
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, HttpResponse
 from .base_62_converter import *
 from random import randint
 import requests, os
@@ -139,6 +139,17 @@ def search(request):
         return render(request, template, context)
     else:
         return redirect('/')
+
+#Downloads the post 
+def downloadBopie(request, slug):
+    model = Bopie.objects.get(slug = slug)
+    filename = slug
+    content = str(model.content)
+    response = HttpResponse(content, content_type='text/plain')
+    response['Content-Disposition'] = 'attachment; filename{0}'.format(filename)
+
+    return response
+
 
 
 #Function that handles user registration

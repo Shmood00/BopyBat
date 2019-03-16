@@ -29,7 +29,7 @@
                   {% if object.postUpload %}
                     <a class="btn btn-primary btn-sm mt-1 mb-1" href="{{object.postUpload.url}}" download>Download</a>    
                   {% else %}
-                    <button class="btn btn-primary btn-sm mt-1 mb-1" id="save-data">Download</button>
+		  <a class="btn btn-primary btn-sm mt-1 mb-1" href="{% url 'bopie-download' object.slug %}"> Download </a>
                   {% endif %}
               </div>
             </div>
