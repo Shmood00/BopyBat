@@ -11,7 +11,6 @@ from random import randint
 import requests, os
 from django.core.paginator import Paginator
 from django.db.models import Q
-from secbin.settings import db_key
 from datetime import datetime, timedelta
 from django.core.files.storage import FileSystemStorage
 # Create your views here.
