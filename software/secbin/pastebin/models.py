@@ -4,8 +4,6 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from PIL import Image
 from django.urls import reverse
-from cryptography.fernet import Fernet
-from secbin.settings import db_key
 from django import forms
 from datetime import datetime, timedelta
 import os
