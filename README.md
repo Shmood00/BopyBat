@@ -48,10 +48,10 @@ We also editted a lot of the files located in the [templates/pastebin](/software
 
 ## SSL and Theme
 
-![](/software/secbin/media/secsofty.jpg)
+![](/software/secbin/media/secsofty.JPG)
 
 ## Backups
 We decided to use cron to backup our web app
 
-![](/software/secbin/media/secsofty2.jpg)
-![](/software/secbin/media/secsofty3.jpg)
+![](/software/secbin/media/secsofty2.JPG)
+![](/software/secbin/media/secsofty3.JPG)
