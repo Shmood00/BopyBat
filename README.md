@@ -44,4 +44,4 @@ We also used a python base 62 converter that we got from [here](https://gist.git
 ## File Edits
 Most of the edits in our app were done on the [models.py](/software/secbin/pastebin/models.py), [views.py](/software/secbin/pastebin/views.py) and [urls.py](/software/secbin/pastebin/urls.py) files.
 
-We also editted a lot of the files located in 
+We also editted a lot of the files located in the [templates/pastebin](/software/secbin/pastebin/templates/pastebin) 
