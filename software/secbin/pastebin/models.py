@@ -31,6 +31,8 @@ class Bopie(models.Model):
     content = models.TextField()
     date_posted = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User, on_delete=models.CASCADE) #creating foreign key relationship with user and bopies
+    
+    #Slug field for the pastebin-like URLs to be stored in
     slug = models.SlugField(max_length=250,default="hallo",unique=True) 
     
     #for uploading posts w/ txt file
@@ -38,7 +40,8 @@ class Bopie(models.Model):
     
     #admin disabling posts
     disable_bopie = models.BooleanField(default=False)
-
+    
+    #Date expiry field
     date_expiry = models.DateField(verbose_name='Expiry Date', blank=True, default=datetime.now()+timedelta(2), null=True)
 
     
