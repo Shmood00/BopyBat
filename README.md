@@ -23,7 +23,9 @@ In order for the project to properly be run on your machine there are some packa
 To run the Web App on your server, do the following:
 * Clone this respository on your local machine
 * Once cloned, direct yourself to the ```/software/secbin/``` folder, which contains the [manage.py](/software/secbin/manage.py) file
-* Once in the proper directory, run the following to execute the server:```sudo python3 manage.py runsslserver```
+* Once in the proper directory, execute the following commands: ```sudo python3 manage.py makemigrations```
+* ```sudo python3 manage.py migrate```
+* Run the following to execute the server:```sudo python3 manage.py runsslserver```
 * To view the Web App open your preferred browser and direct yourself to: [https://localhost:8000/](https://localhost:8000)
 * NOTE: If you would like to test the "Forgot Password" functionality, please open up a new terminal on your machine and run the following command in order run a local SMTP server: ```python -m smtpd -n -c DebuggingServer localhost:1025```. Another thing worth mentioning is, due to the fact that we're using a local SMTP server to capture the email being sent when using the "Forgot Password" functionality, TLS encryption in the [settings.py](/software/secbin/secbin/settings.py) file is not able to be enabled.
 
