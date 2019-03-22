@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'pastebin.apps.PastebinConfig',
     'crispy_forms',
+    'django-cryptography',
     'sslserver', #used for ssl certificate
     'django.contrib.admin',
     'django.contrib.auth',
