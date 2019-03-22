@@ -17,6 +17,7 @@ After completing the tutorial we started to edit the files to meet the requireme
 In order for the project to properly be run on your machine there are some packages needed to be installed:
 * ```pip install django-crispy-forms```
 * ```pip install django-sslserver```
+* ```pip install django-cryptography```
 * ```pip install Pillow```
 
 ## Running The Program
