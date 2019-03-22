@@ -9,10 +9,3 @@ class Migration(migrations.Migration):
         ('pastebin', '0004_bopie_is_disabled'),
     ]
 
-    operations = [
-        migrations.AlterField(
-            model_name='bopie',
-            name='content',
-            field=django_cryptography.fields.encrypt(models.TextField()),
-        ),
-    ]
